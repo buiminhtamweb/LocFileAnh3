@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.locfileanh3.HelloController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Công cụ">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#omToolReadFileNameFromFolder" text="Đọc tên file từ folder" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Hướng dẫn sử dụng" />
+            <Menu mnemonicParsing="false" text="Giới thiệu" />
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Copy tên file ảnh" />
+            <TextArea fx:id="textAreaFileNameList" prefHeight="200.0" prefWidth="200.0" />
+            <Label alignment="TOP_LEFT" text="Đường dẫn chứa file ảnh gốc" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="textFieldFromFolder" prefHeight="25.0" prefWidth="859.0" />
+                  <Button mnemonicParsing="false" onAction="#onSelectFromFolderClick" prefHeight="25.0" prefWidth="282.0" text="Chọn thư mục ảnh gốc" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                   <Button onAction="#onCheckAndFindFileClick" prefHeight="25.0" prefWidth="254.0" text="Kiểm tra và tìm file" />
+                  <Label fx:id="labelErrorMassage" prefHeight="17.0" prefWidth="849.0" textFill="RED">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+               </children>
+            </HBox>
+            <TableView fx:id="listViewFileShowList" prefHeight="335.0" prefWidth="967.0">
+              <columns>
+                  <TableColumn fx:id="colStt" prefWidth="48.0" text="STT" />
+                <TableColumn fx:id="filename" prefWidth="715.0" text="Tên file" />
+                <TableColumn fx:id="status" minWidth="0.0" prefWidth="116.0" text="Trạng thái" />
+              </columns>
+            </TableView>
+            <Label text="Nhập đường dẫn lưu ảnh">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="textFieldToFolder" prefHeight="25.0" prefWidth="831.0" />
+                  <Button mnemonicParsing="false" onAction="#onSelectToFolderClick" prefHeight="25.0" prefWidth="233.0" text="Chọn thư mục lưu ảnh" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onFilterAndCopyFileClick" text="Thực hiện lọc ảnh" />
+                  <Label fx:id="labelProgress" />
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

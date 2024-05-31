@@ -1,0 +1,42 @@
+
+h	java:S112”"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8τ»©Σε1
+M
+java:S3740ί"/Provide the parametrized type for this generic.(»ΊΙί8υ»©Σε1
+R
+java:S3740ρ"/Provide the parametrized type for this generic.(’“ρώÿÿÿÿ8υ»©Σε1
+M
+java:S3740ς"/Provide the parametrized type for this generic.(ν”Γª8υ»©Σε1
+w
+java:S2293Ά"YReplace the type specification in this constructor call with the diamond operator ("<>").(οΆρ―8υ»©Σε1
+|
+java:S2293£"YReplace the type specification in this constructor call with the diamond operator ("<>").(ή΅τΗύÿÿÿÿ8φ»©Σε1
+w
+java:S2293¤"YReplace the type specification in this constructor call with the diamond operator ("<>").(΄φΪ­8φ»©Σε1
+M
+java:S1066"/Merge this if statement with the enclosing one.(™§ƒ‘8φ»©Σε1
+:
+java:S1643"Use a StringBuilder instead.(μΐΞα8χ»©Σε1
+?
+java:S1643‹"Use a StringBuilder instead.(»Ώπ§όÿÿÿÿ8χ»©Σε1
+c
+java:S2184‡"@Cast one of the operands of this addition operation to a "long".(ψΎπ•ύÿÿÿÿ8ψ»©Σε1
+¤
+java:S1186¨"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ϋ¦…ύÿÿÿÿ8‘Ό©Σε1
+L	java:S106_"+Replace this use of System.out by a logger.(»ΙΧφϊÿÿÿÿ8–Ό©Σε1
+L	java:S106r"+Replace this use of System.out by a logger.(ΎΗ’¤ύÿÿÿÿ8—Ό©Σε1
+o
+java:S3776z"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(ί‚ΞΥ8™Ό©Σε1
+a
+java:S1155¬">Use isEmpty() to check whether the collection is empty or not.(Ά΅Ω‹ÿÿÿÿÿ8Ύ„ίλ1
+Y	java:S125δ"<This block of commented-out lines of code should be removed.(Γι¨8Δ„ίλ1
+Y	java:S125ζ"<This block of commented-out lines of code should be removed.(ύ§νµ8Ε„ίλ1
+I
+java:S1075ύ"&Remove this hard-coded path-delimiter.(ώ«ΰδωÿÿÿÿ8Ι„ίλ1
+^	java:S125‚"<This block of commented-out lines of code should be removed.(υΐ¨ύÿÿÿÿ8Κ„ίλ1
+X
+java:S1854Λ":Remove this useless assignment to local variable "result".(•δ»μ8Ν„ίλ1
+b
+java:S1612Α"?Replace this lambda with method reference 'from::requestFocus'.(ÿ†π°ώÿÿÿÿ8Ò„ίλ1
+Y	java:S125Δ"<This block of commented-out lines of code should be removed.(ΚΰΩ–8Ò„ίλ1
+I
+java:S1481Λ"+Remove this unused "result" local variable.(•δ»μ8Ò„ίλ1

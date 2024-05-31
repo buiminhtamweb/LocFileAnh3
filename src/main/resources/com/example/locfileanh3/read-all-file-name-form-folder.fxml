@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.locfileanh3.ReadAllFileNameFormFolder"
+>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label text="Đọc tên file" />
+    <Label alignment="TOP_LEFT" text="Đường dẫn chứa file" />
+    <HBox alignment="CENTER" prefHeight="30.0" prefWidth="560.0">
+        <children>
+            <TextField fx:id="textFieldFileReadFolder" prefHeight="25.0" prefWidth="450.0" />
+            <Button mnemonicParsing="false" onAction="#onSelectFileReadFolder" prefHeight="25.0" prefWidth="101.0" text="Chọn thư mục" />
+        </children>
+    </HBox>
+    <Button mnemonicParsing="false" onAction="#onCheckAndReadAllFileFolder" text="Kiểm tra và đọc tên file" />
+    <TextArea fx:id="textAreaFileNameShowAll" prefHeight="200.0" prefWidth="200.0" />
+
+</VBox>
