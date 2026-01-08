@@ -112,7 +112,6 @@ public class HelloController implements Initializable {
         
         alert.setContentText(content);
         alert.showAndWait();
-    }
 
     // Guided Tour variables
     private int tourStep = 0;
@@ -127,36 +126,36 @@ public class HelloController implements Initializable {
     private void startGuidedTour() {
         tourStep = 0;
         
-        // Create floating instruction window
-        tourOverlay = new Stage();
+        // Create overlay stage
+        tourOverlay = new Stage(StageStyle.TRANSPARENT);
         tourOverlay.initOwner(stage);
-        tourOverlay.setTitle("Hướng dẫn sử dụng");
-        tourOverlay.setAlwaysOnTop(true);
+        tourOverlay.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         
         VBox overlayRoot = new VBox(20);
-        overlayRoot.setStyle("-fx-background-color: #2c3e50; -fx-padding: 30;");
+        overlayRoot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.75);");
         overlayRoot.setAlignment(javafx.geometry.Pos.CENTER);
+        overlayRoot.setPadding(new Insets(50));
         
         tourInstructionLabel = new Label();
-        tourInstructionLabel.setStyle("-fx-font-size: 16; -fx-text-fill: white; -fx-background-color: #3498db; " +
+        tourInstructionLabel.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-background-color: #3498db; " +
                                       "-fx-padding: 20; -fx-background-radius: 10; -fx-font-weight: bold;");
         tourInstructionLabel.setWrapText(true);
-        tourInstructionLabel.setMaxWidth(450);
-        tourInstructionLabel.setMinHeight(120);
+        tourInstructionLabel.setMaxWidth(600);
         tourInstructionLabel.setAlignment(javafx.geometry.Pos.CENTER);
         
-        Button skipButton = new Button("❌ Bỏ qua hướng dẫn");
+        Button skipButton = new Button("Bỏ qua hướng dẫn");
         skipButton.setOnAction(e -> tourOverlay.close());
-        skipButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 10 20; -fx-cursor: hand;");
+        skipButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 10 20;");
         
         overlayRoot.getChildren().addAll(tourInstructionLabel, skipButton);
         
-        Scene overlayScene = new Scene(overlayRoot, 500, 250);
+        Scene overlayScene = new Scene(overlayRoot);
+        overlayScene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         tourOverlay.setScene(overlayScene);
-        
-        // Position at top-right corner
-        tourOverlay.setX(stage.getX() + stage.getWidth() - 520);
-        tourOverlay.setY(stage.getY() + 20);
+        tourOverlay.setWidth(stage.getWidth());
+        tourOverlay.setHeight(stage.getHeight());
+        tourOverlay.setX(stage.getX());
+        tourOverlay.setY(stage.getY());
         
         setupTourListeners();
         showTourStep();

@@ -14,8 +14,12 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("read-all-file-name-form-folder.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        String stylesheet = HelloApplication.class.getResource("styles.css").toExternalForm();
+        scene.getStylesheets().add(stylesheet);
         stage.setTitle("Phần mềm lọc ảnh");
         stage.setScene(scene);
+        stage.setWidth(1200);
+        stage.setHeight(700);
         stage.show();
 
         HelloController controller = (HelloController) fxmlLoader.getController();

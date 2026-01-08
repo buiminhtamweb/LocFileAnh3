@@ -125,6 +125,7 @@ public class HelloController implements Initializable {
     }
 
     private void startGuidedTour() {
+    private void startGuidedTour() {
         tourStep = 0;
         
         // Create floating instruction window
@@ -161,6 +162,7 @@ public class HelloController implements Initializable {
         setupTourListeners();
         showTourStep();
         tourOverlay.show();
+    }
     }
 
     private void showTourStep() {

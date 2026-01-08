@@ -112,7 +112,6 @@ public class HelloController implements Initializable {
         
         alert.setContentText(content);
         alert.showAndWait();
-    }
 
     // Guided Tour variables
     private int tourStep = 0;
@@ -127,36 +126,36 @@ public class HelloController implements Initializable {
     private void startGuidedTour() {
         tourStep = 0;
         
-        // Create floating instruction window
-        tourOverlay = new Stage();
+        // Create overlay stage
+        tourOverlay = new Stage(StageStyle.TRANSPARENT);
         tourOverlay.initOwner(stage);
-        tourOverlay.setTitle("Hướng dẫn sử dụng");
-        tourOverlay.setAlwaysOnTop(true);
+        tourOverlay.initModality(javafx.stage.Modality.APPLICATION_MODAL);
         
         VBox overlayRoot = new VBox(20);
-        overlayRoot.setStyle("-fx-background-color: #2c3e50; -fx-padding: 30;");
+        overlayRoot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.75);");
         overlayRoot.setAlignment(javafx.geometry.Pos.CENTER);
+        overlayRoot.setPadding(new Insets(50));
         
         tourInstructionLabel = new Label();
-        tourInstructionLabel.setStyle("-fx-font-size: 16; -fx-text-fill: white; -fx-background-color: #3498db; " +
+        tourInstructionLabel.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-background-color: #3498db; " +
                                       "-fx-padding: 20; -fx-background-radius: 10; -fx-font-weight: bold;");
         tourInstructionLabel.setWrapText(true);
-        tourInstructionLabel.setMaxWidth(450);
-        tourInstructionLabel.setMinHeight(120);
+        tourInstructionLabel.setMaxWidth(600);
         tourInstructionLabel.setAlignment(javafx.geometry.Pos.CENTER);
         
-        Button skipButton = new Button("❌ Bỏ qua hướng dẫn");
+        Button skipButton = new Button("Bỏ qua hướng dẫn");
         skipButton.setOnAction(e -> tourOverlay.close());
-        skipButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 10 20; -fx-cursor: hand;");
+        skipButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-padding: 10 20;");
         
         overlayRoot.getChildren().addAll(tourInstructionLabel, skipButton);
         
-        Scene overlayScene = new Scene(overlayRoot, 500, 250);
+        Scene overlayScene = new Scene(overlayRoot);
+        overlayScene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         tourOverlay.setScene(overlayScene);
-        
-        // Position at top-right corner
-        tourOverlay.setX(stage.getX() + stage.getWidth() - 520);
-        tourOverlay.setY(stage.getY() + 20);
+        tourOverlay.setWidth(stage.getWidth());
+        tourOverlay.setHeight(stage.getHeight());
+        tourOverlay.setX(stage.getX());
+        tourOverlay.setY(stage.getY());
         
         setupTourListeners();
         showTourStep();
@@ -371,9 +370,6 @@ public class HelloController implements Initializable {
             showDialog("Danh sách tên file không tìm thấy",
                     nameSearchNotFound.toString());
 
-        // Advance tour if active
-        advanceTourIfNeeded();
-
 
     }
 
@@ -407,9 +403,6 @@ public class HelloController implements Initializable {
         listViewFileShowList.refresh();
 
 
-
-        // Complete tour if active
-        completeTourIfNeeded();
     }
 
     private void progressDialogue() {
@@ -522,23 +515,14 @@ public class HelloController implements Initializable {
         );
 
         // First-run: show Help Splash, then About; otherwise: just show About
-        // First-run: show About, then Guided Tour; otherwise: just show About
         java.util.prefs.Preferences prefs = java.util.prefs.Preferences.userNodeForPackage(HelloController.class);
         boolean firstRun = prefs.getBoolean("firstRun", true);
         if (firstRun) {
             Platform.runLater(() -> {
-                onMenuAboutClick();
-                // After About closes, show Guided Tour
-                Platform.runLater(() -> {
-                    Alert askTour = new Alert(Alert.AlertType.CONFIRMATION);
-                    askTour.setTitle("Hướng dẫn sử dụng");
-                    askTour.setHeaderText("Bạn có muốn xem hướng dẫn sử dụng không?");
-                    askTour.setContentText("Hướng dẫn tương tác sẽ giúp bạn làm quen với ứng dụng.");
-                    Optional<ButtonType> result = askTour.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        startGuidedTour();
-                    }
-                });
+                showHelpSplash();
+                // After splash closes (18s), show About
+                Timeline delayedAbout = new Timeline(new KeyFrame(Duration.seconds(19), e -> onMenuAboutClick()));
+                delayedAbout.play();
                 prefs.putBoolean("firstRun", false);
             });
         } else {

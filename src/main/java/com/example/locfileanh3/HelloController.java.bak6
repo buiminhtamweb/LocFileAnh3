@@ -162,6 +162,7 @@ public class HelloController implements Initializable {
         showTourStep();
         tourOverlay.show();
     }
+    }
 
     private void showTourStep() {
         if (tourOverlay == null || !tourOverlay.isShowing()) return;

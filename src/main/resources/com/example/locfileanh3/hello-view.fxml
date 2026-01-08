@@ -5,7 +5,10 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.locfileanh3.HelloController">
+<BorderPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.locfileanh3.HelloController">
+   <fx:define>
+      <ToggleGroup fx:id="separatorGroup" />
+   </fx:define>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -14,64 +17,140 @@
               <MenuItem mnemonicParsing="false" onAction="#omToolReadFileNameFromFolder" text="Đọc tên file từ folder" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Hướng dẫn sử dụng" />
-            <Menu mnemonicParsing="false" text="Giới thiệu" />
+               <!-- <Menu mnemonicParsing="false" text="Hướng dẫn sử dụng">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#onMenuHelpClick" text="Mở hướng dẫn" />
+                  </items>
+               </Menu> -->
+            <Menu mnemonicParsing="false" text="Giới thiệu">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onMenuAboutClick" text="Thông tin ứng dụng" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <GridPane BorderPane.alignment="CENTER" id="mainContainer" hgap="12.0" vgap="10.0">
+         <columnConstraints>
+            <ColumnConstraints percentWidth="30.0" />
+            <ColumnConstraints percentWidth="2.0" />
+            <ColumnConstraints percentWidth="68.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
          <children>
-            <Label text="Copy tên file ảnh" />
-            <TextArea fx:id="textAreaFileNameList" prefHeight="200.0" prefWidth="200.0" />
-            <Label alignment="TOP_LEFT" text="Đường dẫn chứa file ảnh gốc" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <!-- Cột 1: từ đầu -> Kiểm tra và tìm file -->
+            <VBox spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                <children>
-                  <TextField fx:id="textFieldFromFolder" prefHeight="25.0" prefWidth="859.0" />
-                  <Button mnemonicParsing="false" onAction="#onSelectFromFolderClick" prefHeight="25.0" prefWidth="282.0" text="Chọn thư mục ảnh gốc" />
+                  <VBox spacing="8.0" prefHeight="70.0" prefWidth="200.0" styleClass="separator-section">
+                     <children>
+                        <Label text="📝 Ký tự phân biệt:" styleClass="separator-label" />
+                        <HBox spacing="15.0" alignment="CENTER_LEFT">
+                           <children>
+                              <RadioButton fx:id="radioBtnNewline" text="Xuống dòng" selected="true" toggleGroup="$separatorGroup">
+                                 <tooltip><Tooltip text="Bước 1: Chọn ký tự phân biệt"/></tooltip>
+                              </RadioButton>
+                              <RadioButton fx:id="radioBtnComma" text="," toggleGroup="$separatorGroup">
+                                 <tooltip><Tooltip text="Bước 1: Chọn ký tự phân biệt"/></tooltip>
+                              </RadioButton>
+                              <RadioButton fx:id="radioBtnSemicolon" text=";" toggleGroup="$separatorGroup">
+                                 <tooltip><Tooltip text="Bước 1: Chọn ký tự phân biệt"/></tooltip>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                           <children>
+                              <RadioButton fx:id="radioBtnOther" text="Khác:" toggleGroup="$separatorGroup" />
+                              <TextField fx:id="textFieldOtherSeparator" prefHeight="25.0" prefWidth="100.0" promptText="Nhập ký tự phân biệt">
+                                 <tooltip><Tooltip text="Bước 1: Tùy chọn ký tự phân biệt"/></tooltip>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" bottom="10.0" left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <Label text="1. Nhập danh sách tên file:" styleClass="section-label" />
+                  <TextArea fx:id="textAreaFileNameList" prefHeight="160.0" prefWidth="200.0" wrapText="true" VBox.vgrow="ALWAYS">
+                     <tooltip><Tooltip text="File1, File2,...."/></tooltip>
+                  </TextArea>
+               </children>
+            </VBox>
+
+            <!-- Cột 2: Kết quả tìm kiếm -> hết -->
+            <VBox spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
+               <children>
+                  <Label text="📋 3. Kết quả tìm kiếm" styleClass="section-label" />
+                           <TableView fx:id="listViewFileShowList" prefHeight="300.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colStt" minWidth="60.0" prefWidth="60.0" text="STT" />
+                      <TableColumn fx:id="filename" minWidth="100.0" prefWidth="500.0" text="Tên file" />
+                      <TableColumn fx:id="status" minWidth="140.0" prefWidth="140.0" text="Trạng thái" />
+                    </columns>
+                              <tooltip><Tooltip text="Bước 5: Xem kết quả tìm kiếm"/></tooltip>
+                  </TableView>
+               </children>
+            </VBox>
+
+            <!-- Đường kẻ giữa hai cột -->
+            <Separator GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="3" orientation="VERTICAL" />
+
+            <!-- Hàng đường dẫn: mỗi cột một ô -->
+            <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="📁 2. Đường dẫn chứa file ảnh gốc" styleClass="section-label" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" spacing="8.0" styleClass="path-container">
+                     <children>
+                        <TextField fx:id="textFieldFromFolder" prefHeight="32.0" prefWidth="360.0" promptText="Chọn hoặc nhập đường dẫn thư mục chứa ảnh gốc...">
+                           <tooltip><Tooltip text="Bước 3: Chọn đường dẫn chứa ảnh gốc"/></tooltip>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#onSelectFromFolderClick" prefHeight="32.0" prefWidth="140.0" text="🗂 Chọn thư mục" styleClass="secondary-button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <VBox spacing="6.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Label text="💾 4. Đường dẫn lưu ảnh" styleClass="section-label" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" spacing="8.0" styleClass="path-container">
+                     <children>
+                        <TextField fx:id="textFieldToFolder" prefHeight="32.0" prefWidth="460.0" promptText="Chọn hoặc nhập đường dẫn thư mục lưu ảnh...">
+                           <tooltip><Tooltip text="Bước 6: Chọn đường dẫn lưu ảnh"/></tooltip>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#onSelectToFolderClick" prefHeight="32.0" prefWidth="140.0" text="🗂 Chọn thư mục" styleClass="secondary-button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <!-- Hàng nút: mỗi cột một nút -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+               <children>
+                  <Button onAction="#onCheckAndFindFileClick" prefHeight="32.0" prefWidth="220.0" text="🔍 Kiểm tra và tìm file" styleClass="primary-button">
+                     <tooltip><Tooltip text="Bước 4: Bấm để kiểm tra và tìm file"/></tooltip>
+                  </Button>
+                  <Label fx:id="labelErrorMassage" prefHeight="17.0" prefWidth="180.0" textFill="RED" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                   <Button onAction="#onCheckAndFindFileClick" prefHeight="25.0" prefWidth="254.0" text="Kiểm tra và tìm file" />
-                  <Label fx:id="labelErrorMassage" prefHeight="17.0" prefWidth="849.0" textFill="RED">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Label>
-               </children>
-            </HBox>
-            <TableView fx:id="listViewFileShowList" prefHeight="335.0" prefWidth="967.0">
-              <columns>
-                  <TableColumn fx:id="colStt" prefWidth="48.0" text="STT" />
-                <TableColumn fx:id="filename" prefWidth="715.0" text="Tên file" />
-                <TableColumn fx:id="status" minWidth="0.0" prefWidth="116.0" text="Trạng thái" />
-              </columns>
-            </TableView>
-            <Label text="Nhập đường dẫn lưu ảnh">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="textFieldToFolder" prefHeight="25.0" prefWidth="831.0" />
-                  <Button mnemonicParsing="false" onAction="#onSelectToFolderClick" prefHeight="25.0" prefWidth="233.0" text="Chọn thư mục lưu ảnh" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onFilterAndCopyFileClick" text="Thực hiện lọc ảnh" />
-                  <Label fx:id="labelProgress" />
+                  <Button mnemonicParsing="false" onAction="#onFilterAndCopyFileClick" prefHeight="32.0" prefWidth="220.0" text="✂ Thực hiện lọc ảnh" styleClass="primary-button">
+                     <tooltip><Tooltip text="Bước 7: Thực hiện lọc ảnh"/></tooltip>
+                  </Button>
+                  <Label fx:id="labelProgress" styleClass="success-label" />
                </children>
             </HBox>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
          <padding>
-            <Insets left="10.0" right="10.0" />
+            <Insets left="15.0" right="15.0" top="10.0" bottom="10.0" />
          </padding>
-      </VBox>
+      </GridPane>
    </center>
 </BorderPane>
